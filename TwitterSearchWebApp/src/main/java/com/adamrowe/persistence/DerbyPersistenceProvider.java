@@ -16,7 +16,7 @@ import com.adamrowe.models.TwitterSearchStatus;
 
 public class DerbyPersistenceProvider implements PersistenceProviderInterface
 {
-	static
+	/*static
 	{
 		try
 		{
@@ -27,7 +27,7 @@ public class DerbyPersistenceProvider implements PersistenceProviderInterface
 		{
 			throw new RuntimeException(exc);
 		}
-	}
+	}*/
 	
 	private final Connection getConnection()
 	{
@@ -35,9 +35,14 @@ public class DerbyPersistenceProvider implements PersistenceProviderInterface
 		
 		try 
 		{
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
 			connection = getDatabaseConnection("twittersearch/embeddeddb");
 		} 
 		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		} 
+		catch (ClassNotFoundException e) 
 		{
 			e.printStackTrace();
 		}

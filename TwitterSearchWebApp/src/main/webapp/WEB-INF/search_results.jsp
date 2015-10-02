@@ -13,7 +13,7 @@
 <body>
 <div>
 <form action="display_search" name="display_search_results" class="panel">
-<input type="hidden" id="searchQuery" value=""/>
+<input type="hidden" name="searchQuery" id="searchQuery" value=""/>
 <br>Search Term:
 
 <select id="searchRequestsList" onchange="setSearchQuery()">

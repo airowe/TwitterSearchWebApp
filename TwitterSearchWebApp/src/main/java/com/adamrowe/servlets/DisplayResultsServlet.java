@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.adamrowe.models.TwitterConnection;
 import com.adamrowe.models.TwitterSearchStatus;
+import com.adamrowe.utilities.AuthenticationUtilities;
 
 /*
  * Web Servlet mapped to URL /display_search
@@ -34,15 +35,23 @@ public class DisplayResultsServlet extends HttpServlet
 		
 		/* Get Twitter Connection from Servlet Context */
 		TwitterConnection connection = (TwitterConnection) getServletContext().getAttribute("twitterConnection");
-
+		
+		if(connection == null)
+		{
+			connection = new TwitterConnection(AuthenticationUtilities.consumerKey, AuthenticationUtilities.consumerSecret);
+			getServletContext().setAttribute("twitterConnection", connection);
+		}
 		/* Get search queries from database */
 		Set<String> searchQueries = connection.getProvider().getSearchQueries();
 		
 		/* Add current query in to returned set in case a tweet hasn't been posted on that query yet */
 		searchQueries.add(query);
 		
-		/* Pass searchQuery attribute back to jsp for setting selected option */
-		request.setAttribute("searchQuery", query);
+		if(query != null)
+		{
+			/* Pass searchQuery attribute back to jsp for setting selected option */
+			request.setAttribute("searchQuery", query);
+		}
 		
 		/* Pass search queries from database back to jsp */
 		request.setAttribute("searchRequests", searchQueries);

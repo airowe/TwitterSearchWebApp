@@ -11,6 +11,9 @@ public class AppContextListener implements ServletContextListener
 	@Override
 	public void contextDestroyed(ServletContextEvent evt) 
 	{
+		/*
+		 * Cleanup and shutdown twitter stream if servlet context is destroyed
+		 */
 		TwitterConnection connection = (TwitterConnection) evt.getServletContext().getAttribute("twitterConnection");
 		if(connection != null)
 		{
@@ -21,9 +24,6 @@ public class AppContextListener implements ServletContextListener
 	}
 
 	@Override
-	public void contextInitialized(ServletContextEvent arg0) {
-		// TODO Auto-generated method stub
-
-	}
+	public void contextInitialized(ServletContextEvent evt) {}
 
 }

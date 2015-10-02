@@ -50,6 +50,7 @@ public class TwitterConnection
     */
    public void filterTweets(final String searchQuery)
    {
+	   /* Setup FilterQuery on search term */
 	  FilterQuery tweetFilterQuery = new FilterQuery();
 	  tweetFilterQuery.track(new String[]{searchQuery});
 	  
@@ -81,8 +82,8 @@ public class TwitterConnection
 	    };
 	    
 	    twitterStream.addListener(listener);
-	    twitterStream.sample();
 	  
+	    /* Start listening on all public tweets with given FilterQuery */
 	    twitterStream.filter(tweetFilterQuery);
    }
    

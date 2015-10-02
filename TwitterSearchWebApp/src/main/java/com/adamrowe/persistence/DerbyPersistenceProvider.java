@@ -16,6 +16,18 @@ import com.adamrowe.models.TwitterSearchStatus;
 
 public class DerbyPersistenceProvider implements PersistenceProviderInterface
 {
+	static
+	{
+		try
+		{
+			//Load the JDBC Driver for Derby into the JVM
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+		}
+		catch(Exception exc)
+		{
+			throw new RuntimeException(exc);
+		}
+	}
 	
 	private final Connection getConnection()
 	{
@@ -23,14 +35,9 @@ public class DerbyPersistenceProvider implements PersistenceProviderInterface
 		
 		try 
 		{
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
 			connection = getDatabaseConnection("twittersearch/embeddeddb");
 		} 
 		catch (SQLException e) 
-		{
-			e.printStackTrace();
-		} 
-		catch (ClassNotFoundException e) 
 		{
 			e.printStackTrace();
 		}
@@ -38,6 +45,14 @@ public class DerbyPersistenceProvider implements PersistenceProviderInterface
 		return connection;
 	}
 	
+	/*
+	 * Create Schema for STATUSES Table
+	 * column - id (auto-generated)
+	 * column - status_id - id of tweet
+	 * column - search_query - search term
+	 * column - twitter_handle - handle of tweeter
+	 * column - tweet_text - text of tweet found
+	 */
 	public void createSchema()
 	{
 		try 
@@ -50,6 +65,7 @@ public class DerbyPersistenceProvider implements PersistenceProviderInterface
 		} 
 		catch(SQLException exc) 
 		{
+			/* If database already exists, print stack trace and ignore */
 			if(!exc.getSQLState().equals("X0Y32"))
 			{
 				exc.printStackTrace();
@@ -68,6 +84,13 @@ public class DerbyPersistenceProvider implements PersistenceProviderInterface
 		return DriverManager.getConnection(getDerbyConnectionString(databaseName));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.adamrowe.persistence.PersistenceProviderInterface#storeStatus(java.lang.String, com.adamrowe.models.TwitterSearchStatus)
+	 * Store Status in database
+	 * @param searchQuery - search term
+	 * @param TwitterSearchStatus - status returned from search
+	 */
 	@Override
 	public void storeStatus(String searchQuery, TwitterSearchStatus status) 
 	{
@@ -91,6 +114,12 @@ public class DerbyPersistenceProvider implements PersistenceProviderInterface
 		
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.adamrowe.persistence.PersistenceProviderInterface#getStatuses(java.lang.String)
+	 * @return all statuses on a given search query
+	 * @param searchQuery - search term
+	 */
 	@Override
 	public Iterator<TwitterSearchStatus> getStatuses(String searchQuery) 
 	{
@@ -127,6 +156,11 @@ public class DerbyPersistenceProvider implements PersistenceProviderInterface
 		return null;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see com.adamrowe.persistence.PersistenceProviderInterface#getSearchQueries()
+	 * @return all distinct search queries
+	 */
 	@Override
 	public Set<String> getSearchQueries() 
 	{

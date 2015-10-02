@@ -1,0 +1,20 @@
+.panel
+{
+	background-color: ButtonFace;
+	color: black;
+	border:1px solid #909090;
+	padding: 1px;
+	margin: 1px;
+}
+
+div.left 
+{
+    float: left;
+    clear: both;
+}
+
+div.right 
+{
+    float: right;
+    clear: both;
+}

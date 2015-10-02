@@ -20,7 +20,6 @@ public class AppContextListener implements ServletContextListener
 			connection.getTwitterStream().cleanUp();
 			connection.getTwitterStream().shutdown();
 		}
-
 	}
 
 	@Override

@@ -16,18 +16,6 @@ import com.adamrowe.models.TwitterSearchStatus;
 
 public class DerbyPersistenceProvider implements PersistenceProviderInterface
 {
-	/*static
-	{
-		try
-		{
-			//Load the JDBC Driver for Derby into the JVM
-			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-		}
-		catch(Exception exc)
-		{
-			throw new RuntimeException(exc);
-		}
-	}*/
 	
 	private final Connection getConnection()
 	{

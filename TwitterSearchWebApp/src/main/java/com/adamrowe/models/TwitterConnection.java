@@ -1,7 +1,6 @@
 package com.adamrowe.models;
 
 import com.adamrowe.persistence.DerbyPersistenceProvider;
-import com.adamrowe.persistence.PersistenceProviderInterface;
 import com.adamrowe.utilities.AuthenticationUtilities;
 
 import twitter4j.*;
@@ -9,7 +8,6 @@ import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
 /*
- * 
  * @author arowe
  * TwitterConnection class creates a TwitterStream instance and filters tweets based on a provided query term
  */
